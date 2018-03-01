@@ -60,9 +60,8 @@ dtype reduce_cpu(dtype *data, int n) {
 
 __global__ void
 kernel2 (dtype *input, dtype *output, unsigned int n)
-
 {
-  __shared__  dtype scratch[MAX_THREADS];
+	__shared__  dtype scratch[MAX_THREADS];
 
   unsigned int bid = gridDim.x * blockIdx.y + blockIdx.x;
   unsigned int i = bid * blockDim.x + threadIdx.x;
@@ -74,27 +73,26 @@ kernel2 (dtype *input, dtype *output, unsigned int n)
   }
   __syncthreads ();
 
- /* for(unsigned int s = 1; s < blockDim.x; s = s << 1) {
-		if((threadIdx.x *(2*s)) < blockDim.x) {
-    	unsigned int offset = ((blockDim.x-1)/(2*s)) + 1;
-			scratch[threadIdx.x] += scratch[threadIdx.x + offset];
+  /*for(unsigned int s = 1; s < blockDim.x; s = s << 1) {
+        if((threadIdx.x *(2*s)) < blockDim.x) {
+        unsigned int offset = ((blockDim.x-1)/(2*s)) + 1;
+            scratch[threadIdx.x] += scratch[threadIdx.x + offset];
     }
     __syncthreads ();
-  } */
+  }*/
 
-	for(unsigned int s = blockDim.x; s > 1; s /= 2) {	
-		if(threadIdx.x + (s-1)/2 + 1 < s) {
-			scratch[threadIdx.x] += scratch[threadIdx.x + (s-1)/2 + 1];
-		}
+    for(unsigned int s = blockDim.x; s > 1; s /= 2) {    
+        if(threadIdx.x + (s-1)/2 + 1 < s) {
+            scratch[threadIdx.x] += scratch[threadIdx.x + (s-1)/2 + 1];
+        }
     __syncthreads ();
   }
 
   if(threadIdx.x == 0) {
     output[bid] = scratch[0];
   }
+
 }
-
-
 int 
 main(int argc, char** argv)
 {

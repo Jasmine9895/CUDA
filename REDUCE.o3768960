@@ -1,0 +1,43 @@
+Script began: Wed Feb 28 20:42:51 PST 2018
+Node: compute-1-14.local
+Current directory: /data/users/babadine/HPC_224/hw/hw3
+
+=== Running 5 trials of naive ... ===
+*** Trial 1 ***
+N: 200000001
+Timer: gettimeofday
+Timer resolution: ~ 1 us (?)
+Time to execute sequential index GPU reduction kernel: 0.045704 secs
+Effective bandwidth: 17.50 GB/s
+Time to execute naive CPU reduction: 2.37269 secs
+*** Trial 2 ***
+N: 200000001
+Timer: gettimeofday
+Timer resolution: ~ 1 us (?)
+Time to execute sequential index GPU reduction kernel: 0.045695 secs
+Effective bandwidth: 17.51 GB/s
+Time to execute naive CPU reduction: 2.37291 secs
+*** Trial 3 ***
+N: 200000001
+Timer: gettimeofday
+Timer resolution: ~ 1 us (?)
+Time to execute sequential index GPU reduction kernel: 0.045699 secs
+Effective bandwidth: 17.51 GB/s
+Time to execute naive CPU reduction: 2.37243 secs
+*** Trial 4 ***
+N: 200000001
+Timer: gettimeofday
+Timer resolution: ~ 1 us (?)
+Time to execute sequential index GPU reduction kernel: 0.04572 secs
+Effective bandwidth: 17.50 GB/s
+Time to execute naive CPU reduction: 2.37267 secs
+*** Trial 5 ***
+N: 200000001
+Timer: gettimeofday
+Timer resolution: ~ 1 us (?)
+Time to execute sequential index GPU reduction kernel: 0.045708 secs
+Effective bandwidth: 17.50 GB/s
+Time to execute naive CPU reduction: 2.3724 secs
+SUCCESS: GPU: 999.959106  CPU: 999.959106
+
+=== Done! ===
