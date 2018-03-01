@@ -1,0 +1,32 @@
+Script began: Wed Feb 28 19:32:21 PST 2018
+Node: compute-1-14.local
+Current directory: /data/users/babadine/HPC_224/hw/hw3
+
+=== Running 5 trials of naive ... ===
+*** Trial 1 ***
+N: 2000000007
+Timer: gettimeofday
+Timer resolution: ~ 1 us (?)
+out of memory in sequential.cu at line 137
+*** Trial 2 ***
+N: 2000000007
+Timer: gettimeofday
+Timer resolution: ~ 1 us (?)
+out of memory in sequential.cu at line 137
+*** Trial 3 ***
+N: 2000000007
+Timer: gettimeofday
+Timer resolution: ~ 1 us (?)
+out of memory in sequential.cu at line 137
+*** Trial 4 ***
+N: 2000000007
+Timer: gettimeofday
+Timer resolution: ~ 1 us (?)
+out of memory in sequential.cu at line 137
+*** Trial 5 ***
+N: 2000000007
+Timer: gettimeofday
+Timer resolution: ~ 1 us (?)
+out of memory in sequential.cu at line 137
+
+=== Done! ===
