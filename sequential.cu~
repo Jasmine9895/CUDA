@@ -59,13 +59,6 @@ dtype reduce_cpu(dtype *data, int n) {
   return sum;
 }
 
-__global__ void myCeil(int den, int num)
-{
-	if(num % den == 0)
-		den = num / den;
-	else
-		den = (num / den) + 1;
-}
 
 __global__ void
 kernel2 (dtype *input, dtype *output, unsigned int n)
@@ -82,15 +75,7 @@ kernel2 (dtype *input, dtype *output, unsigned int n)
   }
   __syncthreads ();
 
- /* for(unsigned int s = 1; s < blockDim.x; s = s << 1) {
-		if((threadIdx.x *(2*s)) < blockDim.x) {
-    	unsigned int offset = ((blockDim.x-1)/(2*s)) + 1;
-			scratch[threadIdx.x] += scratch[threadIdx.x + offset];
-    }
-    __syncthreads ();
-  } */
-
-	for(unsigned int s = blockDim.x; s > 1; s = myCeil(s,2)) {	
+	for(unsigned int s = blockDim.x; s > 1; s/=2) {	
 		if(threadIdx.x < s/2) {
 			scratch[threadIdx.x] += scratch[threadIdx.x + (s-1)/2 + 1];
 		}
