@@ -1,13 +1,12 @@
 #include <stdlib.h>
 #include <stdio.h>
-//#include <math.h>
 
 #include "timer.h"
 #include "cuda_utils.h"
 
 typedef float dtype;
 
-#define N_ 2000001//(8 * 1024 * 1024)
+#define N_ (8 * 1024 * 1024)
 #define MAX_THREADS 256
 #define MAX_BLOCKS 64
 
@@ -59,7 +58,6 @@ dtype reduce_cpu(dtype *data, int n) {
   return sum;
 }
 
-
 __global__ void
 kernel2 (dtype *input, dtype *output, unsigned int n)
 {
@@ -75,9 +73,9 @@ kernel2 (dtype *input, dtype *output, unsigned int n)
   }
   __syncthreads ();
 
-	for(unsigned int s = blockDim.x; s > 1; s/=2) {	
-		if(threadIdx.x < s/2) {
-			scratch[threadIdx.x] += scratch[threadIdx.x + (s-1)/2 + 1];
+	for(unsigned int s = blockDim.x; s > 1; s = s>>1) {	
+		if(threadIdx.x < s>>1) {
+			scratch[threadIdx.x] += scratch[threadIdx.x + (s-1)>>1 + 1];
 		}
     __syncthreads ();
   }
@@ -86,6 +84,7 @@ kernel2 (dtype *input, dtype *output, unsigned int n)
     output[bid] = scratch[0];
   }
 }
+
 int 
 main(int argc, char** argv)
 {

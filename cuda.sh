@@ -43,6 +43,8 @@ echo "=== Running 5 trials of naive ... ==="
 for trial in 1 2 3 4 5; do
   echo "*** Trial ${trial} ***"
   ./sequential
+	#nvprof --print-gpu-trace ./first_add
+	#./first_add
 done
 
 echo ""

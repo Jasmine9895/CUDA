@@ -5,10 +5,8 @@ all:	naive.cu sequential.cu first_add.cu stride.cu unroll.cu multiple.cu timer.c
 	nvcc stride.cu timer.c -o stride
 	nvcc unroll.cu timer.c -o unroll
 	nvcc multiple.cu timer.c -o multiple
-
-load:
-	module load cuda/5.0
-	module load gcc/4.4.3
+# module load cuda/5.0
+# module load gcc/4.4.3
 
 naive:	naive.cu timer.c
 	nvcc naive.cu timer.c -o naive
@@ -28,4 +26,5 @@ unroll:	unroll.cu timer.c
 mult:	multiple.cu timer.c
 	nvcc multiple.cu timer.c -o multiple
 
-
+make run:
+	qsub cuda.sh

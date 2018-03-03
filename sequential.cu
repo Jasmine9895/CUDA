@@ -58,7 +58,6 @@ dtype reduce_cpu(dtype *data, int n) {
   return sum;
 }
 
-
 __global__ void
 kernel2 (dtype *input, dtype *output, unsigned int n)
 {
@@ -85,6 +84,7 @@ kernel2 (dtype *input, dtype *output, unsigned int n)
     output[bid] = scratch[0];
   }
 }
+
 int 
 main(int argc, char** argv)
 {

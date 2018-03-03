@@ -60,38 +60,35 @@ dtype reduce_cpu(dtype *data, int n) {
 
 
 __global__ void
-kernel3(dtype *input, dtype *output, unsigned int n)
+kernel2 (dtype *input, dtype *output, unsigned int n)
 {
-  __shared__  dtype scratch[MAX_THREADS];
+    __shared__  dtype scratch[MAX_THREADS];
 
   unsigned int bid = gridDim.x * blockIdx.y + blockIdx.x;
   unsigned int i = bid * blockDim.x + threadIdx.x;
 
+	//unsigned int temps = blockDim.x;
+	unsigned int offset1 = ((blockDim.x-1)>>1) + 1;
 
+	if(i+offset1<n)
+	{
+		   scratch[threadIdx.x] = input[i] + input[i + offset1];
 
+	}
+	else
+	{
+		  scratch[threadIdx.x] = 0;
+	}
 
-     unsigned int offset1 = ((blockDim.x-1)/(2*1)) + 1;
 
   __syncthreads ();
-//printf("i: %d",i);
-if(i+offset1<n)
-{
-//      if((threadIdx.x *(2*1)) < blockDim.x) {
-//      printf("thread:%d i:%d ",threadIdx.x,i);
-     scratch[threadIdx.x] = input[i] + input[i + offset1];
-  //      }
-}
-else
-{
-scratch[threadIdx.x] = 0;
-}
 
-  __syncthreads ();
-for(unsigned int s = 2; s < blockDim.x; s = s << 1) {
-      if((threadIdx.x *(2*s)) < blockDim.x) {
-     unsigned int offset = ((blockDim.x-1)/(2*s)) + 1;
-      scratch[threadIdx.x] += scratch[threadIdx.x + offset];
-    }
+
+
+	for(unsigned int s = blockDim.x>>1; s > 1; s = s>>1) {    
+        if(threadIdx.x < s>>1) {
+            scratch[threadIdx.x] += scratch[threadIdx.x + ((s-1)>>1) + 1];
+        }
     __syncthreads ();
   }
 
