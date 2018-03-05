@@ -1,0 +1,42 @@
+Script began: Sun Mar 4 18:54:33 PST 2018
+Node: compute-1-14.local
+Current directory: /data/users/babadine/HPC_224/hw/hw3
+
+=== Running 5 trials of naive ... ===
+*** Trial 1 ***
+N: 8388608
+Timer: gettimeofday
+Timer resolution: ~ 1 us (?)
+Time to execute unrolled GPU reduction kernel: 3.1e-05 secs
+Effective bandwidth: 1082.40 GB/s
+unspecified launch failure in unroll.cu at line 208
+*** Trial 2 ***
+N: 8388608
+Timer: gettimeofday
+Timer resolution: ~ 1 us (?)
+Time to execute unrolled GPU reduction kernel: 3.1e-05 secs
+Effective bandwidth: 1082.40 GB/s
+unspecified launch failure in unroll.cu at line 208
+*** Trial 3 ***
+N: 8388608
+Timer: gettimeofday
+Timer resolution: ~ 1 us (?)
+Time to execute unrolled GPU reduction kernel: 2.4e-05 secs
+Effective bandwidth: 1398.10 GB/s
+unspecified launch failure in unroll.cu at line 208
+*** Trial 4 ***
+N: 8388608
+Timer: gettimeofday
+Timer resolution: ~ 1 us (?)
+Time to execute unrolled GPU reduction kernel: 2.3e-05 secs
+Effective bandwidth: 1458.89 GB/s
+unspecified launch failure in unroll.cu at line 208
+*** Trial 5 ***
+N: 8388608
+Timer: gettimeofday
+Timer resolution: ~ 1 us (?)
+Time to execute unrolled GPU reduction kernel: 2.9e-05 secs
+Effective bandwidth: 1157.05 GB/s
+unspecified launch failure in unroll.cu at line 208
+
+=== Done! ===
