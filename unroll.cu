@@ -9,6 +9,7 @@ typedef float dtype;
 #define N_ (8 * 1024 * 1024)
 #define MAX_THREADS 256
 #define MAX_BLOCKS 64
+#define WARP 32
 
 #define MIN(x,y) ((x < y) ? x : y)
 
@@ -70,23 +71,20 @@ kernel4(dtype *input, dtype *output, unsigned int n)
 	scratch[threadIdx.x] = input[i] + input[i+blockDim.x];
   __syncthreads ();
 
-	/*for(unsigned int s = blockDim.x>>1; s > MAX_THREADS; s =s>>1) {	
+	for(unsigned int s = blockDim.x>>1; s > 32; s =s>>1) {	
 		if(threadIdx.x < s) {
 			scratch[threadIdx.x] += scratch[threadIdx.x + s];
 		}
     __syncthreads ();
-  } */
+  } 
 
-	if(threadIdx.x < blockDim.x){
-		scratch[threadIdx.x] += scratch[threadIdx.x + blockDim.x];	
-		scratch[threadIdx.x] += scratch[threadIdx.x + (blockDim.x/2)];	
-		scratch[threadIdx.x] += scratch[threadIdx.x + (blockDim.x/4)];	
-		scratch[threadIdx.x] += scratch[threadIdx.x + (blockDim.x/8)];	
-		scratch[threadIdx.x] += scratch[threadIdx.x + (blockDim.x/16)];	
-		scratch[threadIdx.x] += scratch[threadIdx.x + (blockDim.x/32)];	
-		scratch[threadIdx.x] += scratch[threadIdx.x + (blockDim.x/64)];	
-		scratch[threadIdx.x] += scratch[threadIdx.x + (blockDim.x/128)];	
-		scratch[threadIdx.x] += scratch[threadIdx.x + (blockDim.x/256)];
+	if(threadIdx.x < WARP){
+		scratch[threadIdx.x] += scratch[threadIdx.x + 32];	
+		scratch[threadIdx.x] += scratch[threadIdx.x + 16];	
+		scratch[threadIdx.x] += scratch[threadIdx.x + 8];	
+		scratch[threadIdx.x] += scratch[threadIdx.x + 4];	
+		scratch[threadIdx.x] += scratch[threadIdx.x + 2];	
+		scratch[threadIdx.x] += scratch[threadIdx.x + 1];	
 	}
 
   if(threadIdx.x == 0) {
