@@ -62,7 +62,7 @@ dtype reduce_cpu(dtype *data, int n) {
 __global__ void
 kernel4(dtype *input, dtype *output, unsigned int n)
 {
-		__shared__ dtype scratch[MAX_THREADS];
+	__shared__ dtype scratch[MAX_THREADS];
 
   unsigned int bid = gridDim.x * blockIdx.y + blockIdx.x;
   unsigned int i = bid * (blockDim.x*2) + threadIdx.x;
@@ -70,49 +70,29 @@ kernel4(dtype *input, dtype *output, unsigned int n)
 	scratch[threadIdx.x] = input[i] + input[i+blockDim.x];
   __syncthreads ();
 
-	for(unsigned int s = blockDim.x>>1; s > 0; s =s>>1) {	
+	/*for(unsigned int s = blockDim.x>>1; s > MAX_THREADS; s =s>>1) {	
 		if(threadIdx.x < s) {
 			scratch[threadIdx.x] += scratch[threadIdx.x + s];
 		}
     __syncthreads ();
-  } 
-	if(threadIdx.x < MAX_THREADS) {
-			scratch[threadIdx.x] += scratch[threadIdx.x + 256];
-			scratch[threadIdx.x] += scratch[threadIdx.x + 128];
-		//if(threadIdx.x < blockDim.x>>1)
-			scratch[threadIdx.x] += scratch[threadIdx.x + 64];
-		//if(threadIdx.x < blockDim.x>>3)
-			scratch[threadIdx.x] += scratch[threadIdx.x + 32];
-		//if(threadIdx.x < blockDim.x>>4)
-			scratch[threadIdx.x] += scratch[threadIdx.x + 16];
-		//if(threadIdx.x < blockDim.x>>5)
-			scratch[threadIdx.x] += scratch[threadIdx.x + 8];
-		//if(threadIdx.x < blockDim.x>>6)
-			scratch[threadIdx.x] += scratch[threadIdx.x + 4];
-		//if(threadIdx.x < blockDim.x>>7)
-			scratch[threadIdx.x] += scratch[threadIdx.x + 2];
-		//if(threadIdx.x < blockDim.x>>8)
-			scratch[threadIdx.x] += scratch[threadIdx.x + 1];
-/*			scratch[threadIdx.x] += scratch[threadIdx.x + MAX_THREADS];
-			scratch[threadIdx.x] += scratch[threadIdx.x + (MAX_THREADS >>1)];
-		//if(threadIdx.x < blockDim.x>>1)
-			scratch[threadIdx.x] += scratch[threadIdx.x + (MAX_THREADS >>2)];
-		//if(threadIdx.x < blockDim.x>>3)
-			scratch[threadIdx.x] += scratch[threadIdx.x + (MAX_THREADS >>3)];
-		//if(threadIdx.x < blockDim.x>>4)
-			scratch[threadIdx.x] += scratch[threadIdx.x + (MAX_THREADS >>4)];
-		//if(threadIdx.x < blockDim.x>>5)
-			scratch[threadIdx.x] += scratch[threadIdx.x + (MAX_THREADS >>5)];
-		//if(threadIdx.x < blockDim.x>>6)
-			scratch[threadIdx.x] += scratch[threadIdx.x + (MAX_THREADS >>6)];
-		//if(threadIdx.x < blockDim.x>>7)
-			scratch[threadIdx.x] += scratch[threadIdx.x + (MAX_THREADS >>7)];
-		//if(threadIdx.x < blockDim.x>>8)
-			scratch[threadIdx.x] += scratch[threadIdx.x + (MAX_THREADS >>8)]; */
+  } */
+
+	if(threadIdx.x < blockDim.x){
+		scratch[threadIdx.x] += scratch[threadIdx.x + blockDim.x];	
+		scratch[threadIdx.x] += scratch[threadIdx.x + (blockDim.x/2)];	
+		scratch[threadIdx.x] += scratch[threadIdx.x + (blockDim.x/4)];	
+		scratch[threadIdx.x] += scratch[threadIdx.x + (blockDim.x/8)];	
+		scratch[threadIdx.x] += scratch[threadIdx.x + (blockDim.x/16)];	
+		scratch[threadIdx.x] += scratch[threadIdx.x + (blockDim.x/32)];	
+		scratch[threadIdx.x] += scratch[threadIdx.x + (blockDim.x/64)];	
+		scratch[threadIdx.x] += scratch[threadIdx.x + (blockDim.x/128)];	
+		scratch[threadIdx.x] += scratch[threadIdx.x + (blockDim.x/256)];
 	}
+
   if(threadIdx.x == 0) {
     output[bid] = scratch[0];
   }
+
 }
 
 
