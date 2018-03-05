@@ -60,7 +60,7 @@ dtype reduce_cpu(dtype *data, int n) {
 
 
 __global__ void
-kernel4(dtype *g_idata, dtype *g_odata, unsigned int n)
+kernel4(dtype *input, dtype *output, unsigned int n)
 {
 	__shared__  dtype scratch[MAX_THREADS];
 
@@ -74,13 +74,30 @@ kernel4(dtype *g_idata, dtype *g_odata, unsigned int n)
   }
   __syncthreads ();
 
-	for(unsigned int s = blockDim.x; s > 1; s= s>>1) {	
+	/*for(unsigned int s = blockDim.x; s > 1; s = s>>1) {	
 		if(threadIdx.x < s>>1) {
-			scratch[threadIdx.x] += scratch[threadIdx.x + ((s-1)/>>1) + 1];
+			scratch[threadIdx.x] += scratch[threadIdx.x + ((s-1)>>1) + 1];
 		}
     __syncthreads ();
-  }
+  }*/
+		if(threadIdx.x < MAX_THREADS)
 
+			scratch[threadIdx.x] += scratch[threadIdx.x + (blockDim.x-1)>>1];
+		//if(threadIdx.x < blockDim.x>>1)
+			scratch[threadIdx.x] += scratch[threadIdx.x + ((blockDim.x-1)>>2)];
+		//if(threadIdx.x < blockDim.x>>3)
+			scratch[threadIdx.x] += scratch[threadIdx.x + ((blockDim.x-1)>>3)];
+		//if(threadIdx.x < blockDim.x>>4)
+			scratch[threadIdx.x] += scratch[threadIdx.x + ((blockDim.x-1)>>4)];
+		//if(threadIdx.x < blockDim.x>>5)
+			scratch[threadIdx.x] += scratch[threadIdx.x + ((blockDim.x-1)>>5)];
+		//if(threadIdx.x < blockDim.x>>6)
+			scratch[threadIdx.x] += scratch[threadIdx.x + ((blockDim.x-1)>>6)];
+		//if(threadIdx.x < blockDim.x>>7)
+			scratch[threadIdx.x] += scratch[threadIdx.x + ((blockDim.x-1)>>7)];
+		//if(threadIdx.x < blockDim.x>>8)
+			scratch[threadIdx.x] += scratch[threadIdx.x + ((blockDim.x-1)>>8)];
+	
   if(threadIdx.x == 0) {
     output[bid] = scratch[0];
   }
