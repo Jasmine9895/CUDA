@@ -71,30 +71,34 @@ kernel4(dtype *input, dtype *output, unsigned int n)
 	scratch[threadIdx.x] = input[i] + input[i+blockDim.x];
   __syncthreads ();
 
-	for(unsigned int s = blockDim.x>>1; s > 32; s =s>>1) {	
+	for(unsigned int s = blockDim.x>>1; s > 8; s =s>>1) {	
 		if(threadIdx.x < s) {
 			scratch[threadIdx.x] += scratch[threadIdx.x + s];
 		}
     __syncthreads ();
-  } 
 
-	if(threadIdx.x < 32)
-		scratch[threadIdx.x] += scratch[threadIdx.x + 32];
-	if(threadIdx.x < 16)
-		scratch[threadIdx.x] += scratch[threadIdx.x + 16];
-	if(threadIdx.x < 8)
-		scratch[threadIdx.x] += scratch[threadIdx.x + 8];
-	if(threadIdx.x < 4)
-		scratch[threadIdx.x] += scratch[threadIdx.x + 4];
-	if(threadIdx.x < 2)
-		scratch[threadIdx.x] += scratch[threadIdx.x + 2];
-	if(threadIdx.x < 1)
-		scratch[threadIdx.x] += scratch[threadIdx.x + 1];
+  }
+
+	 
+		if(threadIdx.x < 8) {
+			scratch[threadIdx.x] += scratch[threadIdx.x + 8];
+		}
+		if(threadIdx.x < 4) {
+			scratch[threadIdx.x] += scratch[threadIdx.x + 4];
+		}
+		if(threadIdx.x < 2) {
+			scratch[threadIdx.x] += scratch[threadIdx.x + 2];
+		}
+		if(threadIdx.x < 1) {
+			scratch[threadIdx.x] += scratch[threadIdx.x + 1];
+		}
 
   if(threadIdx.x == 0) {
     output[bid] = scratch[0];
   }
 }
+
+
 
 
 
