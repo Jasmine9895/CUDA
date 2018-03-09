@@ -78,8 +78,8 @@ kernel4(dtype *input, dtype *output, unsigned int n)
 	for(unsigned int s = blockDim.x>>1; s > 16; s =s>>1) {	
 		if(threadIdx.x < s) {
 			scratch[threadIdx.x] += scratch[threadIdx.x + s];
+    			__syncthreads ();
 		}
-    __syncthreads ();
 
   }
 
@@ -87,6 +87,8 @@ kernel4(dtype *input, dtype *output, unsigned int n)
 		if(threadIdx.x < 16) {
 			if(n>32)
 			scratch[threadIdx.x] += scratch[threadIdx.x + 16];
+			
+    			__syncthreads ();
 			
 			scratch[threadIdx.x] += scratch[threadIdx.x + 8];
 			scratch[threadIdx.x] += scratch[threadIdx.x + 4];
@@ -194,7 +196,7 @@ main(int argc, char** argv)
 
 		dim3 gb(blocks, 1, 1);
 		dim3 tb(threads, 1, 1);
-
+		printf("s= %d------------\n",s);
 		kernel4 <<<gb, tb>>> (d_odata, d_odata, s);
 
 		s = (s + threads * 2 - 1) / (threads * 2);
