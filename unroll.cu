@@ -68,8 +68,12 @@ kernel4(dtype *input, dtype *output, unsigned int n)
   unsigned int bid = gridDim.x * blockIdx.y + blockIdx.x;
   unsigned int i = bid * (blockDim.x*2) + threadIdx.x;
 
-	scratch[threadIdx.x] = input[i] + input[i+blockDim.x];
-  __syncthreads ();
+	if(i+blockDim.x < n)
+		scratch[threadIdx.x] = input[i] + input[i+blockDim.x];
+	else
+		scratch[threadIdx.x] = 0;
+
+ __syncthreads ();
 
 	for(unsigned int s = blockDim.x>>1; s > 16; s =s>>1) {	
 		if(threadIdx.x < s) {
@@ -81,14 +85,12 @@ kernel4(dtype *input, dtype *output, unsigned int n)
 
 	 
 		if(threadIdx.x < 16) {
+			if(n>32)
 			scratch[threadIdx.x] += scratch[threadIdx.x + 16];
-    __syncthreads ();
+			
 			scratch[threadIdx.x] += scratch[threadIdx.x + 8];
-    __syncthreads ();
 			scratch[threadIdx.x] += scratch[threadIdx.x + 4];
-    __syncthreads ();
 			scratch[threadIdx.x] += scratch[threadIdx.x + 2];
-    __syncthreads ();
 			scratch[threadIdx.x] += scratch[threadIdx.x + 1];
 		}
 
@@ -105,6 +107,24 @@ kernel4(dtype *input, dtype *output, unsigned int n)
 int 
 main(int argc, char** argv)
 {
+	
+
+	int nDevices;
+
+  cudaGetDeviceCount(&nDevices);
+  for (int i = 0; i < nDevices; i++) {
+    cudaDeviceProp prop;
+    cudaGetDeviceProperties(&prop, i);
+    printf("Device Number: %d\n", i);
+    printf("  Device name: %s\n", prop.name);
+    printf("  Memory Clock Rate (KHz): %d\n",
+           prop.memoryClockRate);
+    printf("  Memory Bus Width (bits): %d\n",
+           prop.memoryBusWidth);
+    printf("  Peak Memory Bandwidth (GB/s): %f\n\n",
+           2.0*prop.memoryClockRate*(prop.memoryBusWidth/8)/1.0e6);
+  }
+
 	int i;
 
 	/* data structure */
