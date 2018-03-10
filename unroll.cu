@@ -63,15 +63,21 @@ dtype reduce_cpu(dtype *data, int n) {
 __global__ void
 kernel4(dtype *input, dtype *output, unsigned int n)
 {
-	__shared__ dtype scratch[MAX_THREADS];
+	__shared__ volatile dtype scratch[MAX_THREADS];
 
   unsigned int bid = gridDim.x * blockIdx.y + blockIdx.x;
   unsigned int i = bid * (blockDim.x*2) + threadIdx.x;
 
-	scratch[threadIdx.x] = input[i] + input[i+blockDim.x];
+	if(i+blockDim.x < n)
+		scratch[threadIdx.x] = input[i] + input[i+blockDim.x];
+	else
+		scratch[threadIdx.x] = 0;
+
   __syncthreads ();
 
-	for(unsigned int s = blockDim.x>>1; s > 32; s =s>>1) {	
+	
+	
+/*	for(unsigned int s = blockDim.x>>1; s > 32; s =s>>1) {	
 		if(threadIdx.x < s) {
 			scratch[threadIdx.x] += scratch[threadIdx.x + s];
 		}
@@ -83,22 +89,47 @@ kernel4(dtype *input, dtype *output, unsigned int n)
 		if(threadIdx.x < 32) {
 			if(n>64)
 			scratch[threadIdx.x] += scratch[threadIdx.x + 32];
-    __syncthreads ();
+//    __syncthreads ();
 			if(n>32)
 			scratch[threadIdx.x] += scratch[threadIdx.x + 16];
-    __syncthreads ();
+//    __syncthreads ();
 			scratch[threadIdx.x] += scratch[threadIdx.x + 8];
-    __syncthreads ();
+//    __syncthreads ();
 			scratch[threadIdx.x] += scratch[threadIdx.x + 4];
-    __syncthreads ();
+//    __syncthreads ();
 			scratch[threadIdx.x] += scratch[threadIdx.x + 2];
-    __syncthreads ();
+//    __syncthreads ();
+			scratch[threadIdx.x] += scratch[threadIdx.x + 1];
+		}
+*/
+
+
+	for(unsigned int s = blockDim.x>>1; s > 8; s =s>>1) {	
+		if(threadIdx.x < s) {
+			scratch[threadIdx.x] += scratch[threadIdx.x + s];
+    			__syncthreads ();
+		}
+
+  }
+
+	 
+		if(threadIdx.x < 8) {
+   // __syncthreads ();
+			scratch[threadIdx.x] += scratch[threadIdx.x + 8];
+   // __syncthreads ();
+			scratch[threadIdx.x] += scratch[threadIdx.x + 4];
+   // __syncthreads ();
+			scratch[threadIdx.x] += scratch[threadIdx.x + 2];
+   // __syncthreads ();
 			scratch[threadIdx.x] += scratch[threadIdx.x + 1];
 		}
 
+    __syncthreads ();
   if(threadIdx.x == 0) {
     output[bid] = scratch[0];
+    __syncthreads ();
   }
+
 }
 
 
