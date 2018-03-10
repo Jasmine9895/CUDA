@@ -62,8 +62,37 @@ dtype reduce_cpu(dtype *data, int n) {
 __global__ void
 kernel5(dtype *g_idata, dtype *g_odata, unsigned int n)
 {
-}
 
+  __shared__ dtype scratch[MAX_THREADS];
+  unsigned int bid = gridDim.x * blockIdx.y + blockIdx.x;
+  unsigned int i = bid * (blockDim.x) + threadIdx.x;
+
+  int num_elements_per_thread = n / (blockDim.x * gridDim.x);
+  float temp = 0.0;
+  //might be a good idea to put condition for i < n
+  int beg_ind = i*num_elements_per_thread;
+  for(int k=0;k<num_elements_per_thread;k++)
+  {
+    temp = temp + g_idata[beg_ind+k];
+  }
+  scratch[threadIdx.x] = temp;
+  //This will consecutively place all the 512 elements summation in the scratch
+
+  //scratch[threadIdx.x] = input[i] + input[i+blockDim.x];
+  __syncthreads ();
+
+        for(unsigned int s = blockDim.x>>1; s > 0; s =s>>1) {
+                if(threadIdx.x < s) {
+                        scratch[threadIdx.x] += scratch[threadIdx.x + s];
+                }
+    __syncthreads ();
+  }
+
+  if(threadIdx.x == 0) {
+    g_odata[bid] = scratch[0];
+  }
+
+}
 
 
 
