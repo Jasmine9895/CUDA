@@ -1,0 +1,262 @@
+Script began: Fri Mar 9 23:04:27 PST 2018
+Node: compute-1-14.local
+Current directory: /data/users/jbhanush/HW3/hw3_bev/CUDA
+
+=== Running 5 trials of naive ... ===
+*** Trial 1 ***
+------NAIVE-----------
+N: 8388608
+Timer: gettimeofday
+Timer resolution: ~ 1 us (?)
+Time to execute naive GPU reduction kernel: 0.003357 secs
+Effective bandwidth: 10.00 GB/s
+Time to execute naive CPU reduction: 0.116124 secs
+SUCCESS: GPU: 41.938900 	CPU: 41.938900
+------STRIDE-----------
+N: 8388608
+Timer: gettimeofday
+Timer resolution: ~ 1 us (?)
+Time to execute strided index GPU reduction kernel: 0.002217 secs
+Effective bandwidth: 15.14 GB/s
+Time to execute naive CPU reduction: 0.116156 secs
+SUCCESS: GPU: 41.937538  CPU: 41.937542
+------SEQUENTIAL-----------
+N: 8388608
+Timer: gettimeofday
+Timer resolution: ~ 1 us (?)
+Time to execute sequential index GPU reduction kernel: 0.001768 secs
+Effective bandwidth: 18.98 GB/s
+Time to execute naive CPU reduction: 0.116138 secs
+SUCCESS: GPU: 41.937542  CPU: 41.937542
+------FIRST-ADD-----------
+N: 8388608
+Timer: gettimeofday
+Timer resolution: ~ 1 us (?)
+Time to execute first add GPU reduction kernel: 0.000937 secs
+Effective bandwidth: 35.81 GB/s
+Time to execute naive CPU reduction: 0.116104 secs
+SUCCESS: GPU: 41.952263  CPU: 41.952263
+------UNROLL-----------
+N: 8388608
+Timer: gettimeofday
+Timer resolution: ~ 1 us (?)
+s=16384	blocks= 32	threads=256 ------
+s=32	blocks= 1	threads=16 ------
+Time to execute unrolled GPU reduction kernel: 0.00062 secs
+Effective bandwidth: 54.12 GB/s
+Time to execute naive CPU reduction: 0.11613 secs
+SUCCESS: GPU: 41.952263  CPU: 41.952263
+------MULTIPLE-----------
+N: 8388608
+Timer: gettimeofday
+Timer resolution: ~ 1 us (?)
+Time to execute multiple add GPU reduction kernel: 0.000384 secs
+Effective bandwidth: 87.38 GB/s
+Time to execute naive CPU reduction: 0.116104 secs
+SUCCESS: GPU: 41.943516  CPU: 41.943516
+*** Trial 2 ***
+------NAIVE-----------
+N: 8388608
+Timer: gettimeofday
+Timer resolution: ~ 1 us (?)
+Time to execute naive GPU reduction kernel: 0.003349 secs
+Effective bandwidth: 10.02 GB/s
+Time to execute naive CPU reduction: 0.116145 secs
+SUCCESS: GPU: 41.943516 	CPU: 41.943516
+------STRIDE-----------
+N: 8388608
+Timer: gettimeofday
+Timer resolution: ~ 1 us (?)
+Time to execute strided index GPU reduction kernel: 0.00222 secs
+Effective bandwidth: 15.11 GB/s
+Time to execute naive CPU reduction: 0.116201 secs
+SUCCESS: GPU: 41.938000  CPU: 41.938000
+------SEQUENTIAL-----------
+N: 8388608
+Timer: gettimeofday
+Timer resolution: ~ 1 us (?)
+Time to execute sequential index GPU reduction kernel: 0.001766 secs
+Effective bandwidth: 19.00 GB/s
+Time to execute naive CPU reduction: 0.116158 secs
+SUCCESS: GPU: 41.938000  CPU: 41.938000
+------FIRST-ADD-----------
+N: 8388608
+Timer: gettimeofday
+Timer resolution: ~ 1 us (?)
+Time to execute first add GPU reduction kernel: 0.000938 secs
+Effective bandwidth: 35.77 GB/s
+Time to execute naive CPU reduction: 0.116855 secs
+SUCCESS: GPU: 41.938000  CPU: 41.938000
+------UNROLL-----------
+N: 8388608
+Timer: gettimeofday
+Timer resolution: ~ 1 us (?)
+s=16384	blocks= 32	threads=256 ------
+s=32	blocks= 1	threads=16 ------
+Time to execute unrolled GPU reduction kernel: 0.000622 secs
+Effective bandwidth: 53.95 GB/s
+Time to execute naive CPU reduction: 0.11611 secs
+SUCCESS: GPU: 41.944851  CPU: 41.944851
+------MULTIPLE-----------
+N: 8388608
+Timer: gettimeofday
+Timer resolution: ~ 1 us (?)
+Time to execute multiple add GPU reduction kernel: 0.000377 secs
+Effective bandwidth: 89.00 GB/s
+Time to execute naive CPU reduction: 0.116116 secs
+SUCCESS: GPU: 41.944851  CPU: 41.944851
+*** Trial 3 ***
+------NAIVE-----------
+N: 8388608
+Timer: gettimeofday
+Timer resolution: ~ 1 us (?)
+Time to execute naive GPU reduction kernel: 0.003349 secs
+Effective bandwidth: 10.02 GB/s
+Time to execute naive CPU reduction: 0.116132 secs
+SUCCESS: GPU: 41.948067 	CPU: 41.948063
+------STRIDE-----------
+N: 8388608
+Timer: gettimeofday
+Timer resolution: ~ 1 us (?)
+Time to execute strided index GPU reduction kernel: 0.002217 secs
+Effective bandwidth: 15.14 GB/s
+Time to execute naive CPU reduction: 0.116197 secs
+SUCCESS: GPU: 41.948067  CPU: 41.948063
+------SEQUENTIAL-----------
+N: 8388608
+Timer: gettimeofday
+Timer resolution: ~ 1 us (?)
+Time to execute sequential index GPU reduction kernel: 0.001767 secs
+Effective bandwidth: 18.99 GB/s
+Time to execute naive CPU reduction: 0.09992 secs
+SUCCESS: GPU: 41.932686  CPU: 41.932686
+------FIRST-ADD-----------
+N: 8388608
+Timer: gettimeofday
+Timer resolution: ~ 1 us (?)
+Time to execute first add GPU reduction kernel: 0.000937 secs
+Effective bandwidth: 35.81 GB/s
+Time to execute naive CPU reduction: 0.104616 secs
+SUCCESS: GPU: 41.932686  CPU: 41.932686
+------UNROLL-----------
+N: 8388608
+Timer: gettimeofday
+Timer resolution: ~ 1 us (?)
+s=16384	blocks= 32	threads=256 ------
+s=32	blocks= 1	threads=16 ------
+Time to execute unrolled GPU reduction kernel: 0.000621 secs
+Effective bandwidth: 54.03 GB/s
+Time to execute naive CPU reduction: 0.101121 secs
+SUCCESS: GPU: 41.932686  CPU: 41.932686
+------MULTIPLE-----------
+N: 8388608
+Timer: gettimeofday
+Timer resolution: ~ 1 us (?)
+Time to execute multiple add GPU reduction kernel: 0.000396 secs
+Effective bandwidth: 84.73 GB/s
+Time to execute naive CPU reduction: 0.116129 secs
+SUCCESS: GPU: 41.951088  CPU: 41.951088
+*** Trial 4 ***
+------NAIVE-----------
+N: 8388608
+Timer: gettimeofday
+Timer resolution: ~ 1 us (?)
+Time to execute naive GPU reduction kernel: 0.003376 secs
+Effective bandwidth: 9.94 GB/s
+Time to execute naive CPU reduction: 0.116197 secs
+SUCCESS: GPU: 41.951088 	CPU: 41.951088
+------STRIDE-----------
+N: 8388608
+Timer: gettimeofday
+Timer resolution: ~ 1 us (?)
+Time to execute strided index GPU reduction kernel: 0.002217 secs
+Effective bandwidth: 15.14 GB/s
+Time to execute naive CPU reduction: 0.116105 secs
+SUCCESS: GPU: 41.939186  CPU: 41.939190
+------SEQUENTIAL-----------
+N: 8388608
+Timer: gettimeofday
+Timer resolution: ~ 1 us (?)
+Time to execute sequential index GPU reduction kernel: 0.001765 secs
+Effective bandwidth: 19.01 GB/s
+Time to execute naive CPU reduction: 0.116043 secs
+SUCCESS: GPU: 41.939190  CPU: 41.939190
+------FIRST-ADD-----------
+N: 8388608
+Timer: gettimeofday
+Timer resolution: ~ 1 us (?)
+Time to execute first add GPU reduction kernel: 0.000938 secs
+Effective bandwidth: 35.77 GB/s
+Time to execute naive CPU reduction: 0.116054 secs
+SUCCESS: GPU: 41.939064  CPU: 41.939060
+------UNROLL-----------
+N: 8388608
+Timer: gettimeofday
+Timer resolution: ~ 1 us (?)
+s=16384	blocks= 32	threads=256 ------
+s=32	blocks= 1	threads=16 ------
+Time to execute unrolled GPU reduction kernel: 0.00062 secs
+Effective bandwidth: 54.12 GB/s
+Time to execute naive CPU reduction: 0.116038 secs
+SUCCESS: GPU: 41.939064  CPU: 41.939060
+------MULTIPLE-----------
+N: 8388608
+Timer: gettimeofday
+Timer resolution: ~ 1 us (?)
+Time to execute multiple add GPU reduction kernel: 0.000386 secs
+Effective bandwidth: 86.93 GB/s
+Time to execute naive CPU reduction: 0.116064 secs
+SUCCESS: GPU: 41.939064  CPU: 41.939060
+*** Trial 5 ***
+------NAIVE-----------
+N: 8388608
+Timer: gettimeofday
+Timer resolution: ~ 1 us (?)
+Time to execute naive GPU reduction kernel: 0.003347 secs
+Effective bandwidth: 10.03 GB/s
+Time to execute naive CPU reduction: 0.116008 secs
+SUCCESS: GPU: 41.938675 	CPU: 41.938675
+------STRIDE-----------
+N: 8388608
+Timer: gettimeofday
+Timer resolution: ~ 1 us (?)
+Time to execute strided index GPU reduction kernel: 0.002217 secs
+Effective bandwidth: 15.14 GB/s
+Time to execute naive CPU reduction: 0.09951 secs
+SUCCESS: GPU: 41.938675  CPU: 41.938675
+------SEQUENTIAL-----------
+N: 8388608
+Timer: gettimeofday
+Timer resolution: ~ 1 us (?)
+Time to execute sequential index GPU reduction kernel: 0.001767 secs
+Effective bandwidth: 18.99 GB/s
+Time to execute naive CPU reduction: 0.116001 secs
+SUCCESS: GPU: 41.942616  CPU: 41.942616
+------FIRST-ADD-----------
+N: 8388608
+Timer: gettimeofday
+Timer resolution: ~ 1 us (?)
+Time to execute first add GPU reduction kernel: 0.000938 secs
+Effective bandwidth: 35.77 GB/s
+Time to execute naive CPU reduction: 0.116073 secs
+SUCCESS: GPU: 41.942616  CPU: 41.942616
+------UNROLL-----------
+N: 8388608
+Timer: gettimeofday
+Timer resolution: ~ 1 us (?)
+s=16384	blocks= 32	threads=256 ------
+s=32	blocks= 1	threads=16 ------
+Time to execute unrolled GPU reduction kernel: 0.000621 secs
+Effective bandwidth: 54.03 GB/s
+Time to execute naive CPU reduction: 0.116054 secs
+SUCCESS: GPU: 41.951118  CPU: 41.951118
+------MULTIPLE-----------
+N: 8388608
+Timer: gettimeofday
+Timer resolution: ~ 1 us (?)
+Time to execute multiple add GPU reduction kernel: 0.000398 secs
+Effective bandwidth: 84.31 GB/s
+Time to execute naive CPU reduction: 0.116077 secs
+SUCCESS: GPU: 41.951118  CPU: 41.951118
+
+=== Done! ===
